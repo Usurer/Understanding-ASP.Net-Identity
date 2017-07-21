@@ -126,9 +126,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Identity\MyCookieAuthenticationProvider.cs" />
+    <Compile Include="Identity\MySignInManager.cs" />
     <Compile Include="Identity\MyUser.cs" />
     <Compile Include="Identity\MyUserManager.cs" />
     <Compile Include="Identity\MyUserStore.cs" />
+    <Compile Include="Identity\MyPasswordValidator.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

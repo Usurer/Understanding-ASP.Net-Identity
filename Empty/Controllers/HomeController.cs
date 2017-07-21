@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Empty.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
         public ActionResult Index()
         {
-            return View();
+            var identity = HttpContext.GetOwinContext().Authentication.User.Identity;
+            if (identity.IsAuthenticated)
+            {
+                return View((object)identity.Name);
+            }
+            return View((object)"Not Authenticated");
         }
     }
 }

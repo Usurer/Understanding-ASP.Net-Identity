@@ -11,18 +11,19 @@ namespace Empty.Identity
     {
         public MyUserManager(IUserStore<MyUser> store) : base(store)
         {
+            this.PasswordValidator = new PasswordValidator();
         }
 
-        public override async Task<IdentityResult> CreateAsync(MyUser user)
-        {
-            await Store.CreateAsync(user);
-            return IdentityResult.Success;
-        }
+        //public override async Task<IdentityResult> CreateAsync(MyUser user)
+        //{
+        //    await Store.CreateAsync(user);
+        //    return IdentityResult.Success;
+        //}
 
         public override async Task<IdentityResult> CreateAsync(MyUser user, string password)
         {
-            await Store.CreateAsync(user);
-            return IdentityResult.Success;
+            user.Password = password;
+            return await base.CreateAsync(user, password);
         }
     }
 }

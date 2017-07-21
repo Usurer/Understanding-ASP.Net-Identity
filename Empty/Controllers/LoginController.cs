@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,12 +9,14 @@ using Empty.Identity;
 using Empty.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace Empty.Controllers
 {
     public class LoginController : Controller
     {
         private MyUserManager _userManager;
+        private MySignInManager _signInManager;
 
         public MyUserManager UserManager
         {
@@ -24,6 +27,18 @@ namespace Empty.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public MySignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<MySignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -48,6 +63,8 @@ namespace Empty.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Index(LoginViewModel model, string returnUrl)
         {
+            HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -57,6 +74,7 @@ namespace Empty.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
 
             var user = await UserManager.FindByNameAsync(model.Email);
+            SignInManager.SignIn(user, false, false);
             return RedirectToAction("Index", "Home");
         }
 
@@ -72,7 +90,7 @@ namespace Empty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new MyUser { UserName = model.Email };
+                var user = new MyUser { Id = model.Email, UserName = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 return RedirectToAction("Index", "Home");

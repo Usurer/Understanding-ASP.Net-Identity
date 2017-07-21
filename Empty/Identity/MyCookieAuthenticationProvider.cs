@@ -19,12 +19,12 @@ namespace Empty.Identity
 
         public void ResponseSignIn(CookieResponseSignInContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void ApplyRedirect(CookieApplyRedirectContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

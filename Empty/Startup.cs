@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Empty.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -15,6 +16,7 @@ namespace Empty
         {
             ConfigureAuth(app);
             app.CreatePerOwinContext<MyUserManager>(() => new MyUserManager(new MyUserStore()));
+            app.CreatePerOwinContext<MySignInManager>(MySignInManager.Create);
         }
 
         public void ConfigureAuth(IAppBuilder app)
@@ -23,7 +25,7 @@ namespace Empty
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Login/Index"),
-                Provider = new MyCookieAuthenticationProvider
+                /*Provider = new MyCookieAuthenticationProvider
                 {
                     OnValidateIdentity = (x) =>
                     {
@@ -42,6 +44,14 @@ namespace Empty
 
                         return Task.CompletedTask;
                     }
+                }*/
+                Provider = new CookieAuthenticationProvider
+                {
+                    // Enables the application to validate the security stamp when the user logs in.
+                    // This is a security feature which is used when you change a password or add an external login to your account.  
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<MyUserManager, MyUser>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });
         }
