@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Identity\MyCookieAuthenticationProvider.cs" />
     <Compile Include="Identity\MySignInManager.cs" />
+    <Compile Include="Identity\MyTimeStampValidator.cs" />
     <Compile Include="Identity\MyUser.cs" />
     <Compile Include="Identity\MyUserManager.cs" />
     <Compile Include="Identity\MyUserStore.cs" />
