@@ -7,18 +7,12 @@ using Microsoft.AspNet.Identity;
 
 namespace Empty.Identity
 {
-    public class MyUserManager : UserManager<MyUser>
+    public class MyUserManager : Microsoft.AspNet.Identity.UserManager<MyUser>
     {
         public MyUserManager(IUserStore<MyUser> store) : base(store)
         {
             this.PasswordValidator = new PasswordValidator();
         }
-
-        //public override async Task<IdentityResult> CreateAsync(MyUser user)
-        //{
-        //    await Store.CreateAsync(user);
-        //    return IdentityResult.Success;
-        //}
 
         public override async Task<IdentityResult> CreateAsync(MyUser user, string password)
         {

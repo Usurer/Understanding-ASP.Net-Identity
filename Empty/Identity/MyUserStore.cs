@@ -19,12 +19,6 @@ namespace Empty.Identity
                     _users = new List<MyUser> { new MyUser { Id = "1", Password = "1", UserName = "1"} };
                 return _users;
             }
-            private set { _users = value; }
-        }
-
-        public MyUserStore()
-        {
-            //Users = new List<MyUser>();
         }
 
         public void Dispose()
