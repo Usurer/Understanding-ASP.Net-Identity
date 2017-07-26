@@ -9,7 +9,6 @@ using Empty.Identity;
 using Empty.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 
 namespace Empty.Controllers
 {
@@ -70,9 +69,6 @@ namespace Empty.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-
             var user = await UserManager.FindByNameAsync(model.Email);
             SignInManager.SignIn(user, false, false);
             return RedirectToAction("Index", "Home");
@@ -96,7 +92,6 @@ namespace Empty.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
     }

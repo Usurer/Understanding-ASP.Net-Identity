@@ -10,15 +10,9 @@ namespace Empty.Identity
 {
     public class MySignInManager : SignInManager<MyUser, string>
     {
-        public MySignInManager(MyUserManager userManager, IAuthenticationManager authenticationManager)
-            : base(userManager, authenticationManager)
+        public MySignInManager(MyUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
         {
         }
-
-        //public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
-        //{
-        //    return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
-        //}
 
         public static MySignInManager Create(IdentityFactoryOptions<MySignInManager> options, IOwinContext context)
         {

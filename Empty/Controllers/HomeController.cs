@@ -1,6 +1,5 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 
 namespace Empty.Controllers
 {

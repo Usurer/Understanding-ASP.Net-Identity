@@ -22,17 +22,14 @@ namespace Empty
 
         public void ConfigureAuth(IAppBuilder app)
         {
+            app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Login/Index"),
                 Provider = new MyCookieAuthenticationProvider
                 {
-                    OnValidateIdentity = /*MyTimeStampValidator.OnValidateIdentity<MyUserManager, MyUser>(
-                            validateInterval: TimeSpan.FromSeconds(1),
-                            regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))*/
-
-                    (x) =>
+                    OnValidateIdentity = (x) =>
                     {
                         var userManager = x.OwinContext.GetUserManager<MyUserManager>();
 
@@ -51,14 +48,6 @@ namespace Empty
                         return Task.CompletedTask;
                     }
                 }
-                /*Provider = new CookieAuthenticationProvider
-                {
-                    // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = MyTimeStampValidator.OnValidateIdentity<MyUserManager, MyUser>(
-                        validateInterval: TimeSpan.FromSeconds(1),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }*/
             });
         }
     }
